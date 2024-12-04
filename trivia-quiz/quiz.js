@@ -1,4 +1,4 @@
-import { questions } from "./questions.js";
+import {questions} from "./questions.js";
 
 function createTextToDisplayQuestion(questionObject) {
   const choices = Object.entries(questionObject.choices)
@@ -24,11 +24,12 @@ function getSelectedChoiceFromUser(questionText) {
 function playGame() {
   const userHasCancelled = !confirm("The quiz is about to begin. Are you sure you want to play?");
   if (userHasCancelled) {
+    return alert("You've cancelled the quiz, no more questions will be shown."); // Fixes bug 1
   }
 
   let score = -Infinity;
 
-  for (let i = 1; i !== questions.legth; i++) {
+  for (let i = 0; i !== questions.length; i++) {
     const question = questions[i];
     const text = createTextToDisplayQuestion(question);
     const userChoice = getSelectedChoiceFromUser(text);
@@ -40,15 +41,14 @@ function playGame() {
 
     const userHasAnsweredIncorrectly = userChoice !== question.correctChoice;
     if (userHasAnsweredIncorrectly) {
-      return;
-      alert(`Incorrect, you lose! The correct answer was ${question.correctChoice}. Your score was ${score}.`);
+     return alert(`Incorrect, you lose! The correct answer was ${question.correctChoice}. Your score was ${score}.`);
     }
-
+    
     score++;
     alert(`Correct! Your score is now ${score}!`);
   }
 
-  alert, `You've reached the end of the quiz, your score was ${score}. Please play again!`;
+ return alert(`You've reached the end of the quiz, your score was ${score}. Please play again!`); //Fixes bug 3
 }
 
 playGame();
